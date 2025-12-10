@@ -18,7 +18,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application code
 COPY lang.py .
-COPY .env .
+
+EXPOSE 8000
 
 # Define the command to run the application (Interactive CLI)
-CMD ["python", "lang.py"]
+CMD ["uvicorn", "lang:app", "--host", "0.0.0.0", "--port", "8000"]
