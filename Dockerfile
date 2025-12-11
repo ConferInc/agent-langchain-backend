@@ -1,25 +1,20 @@
-# Use an official lightweight Python image.
-# 3.12-slim is a good choice for size and compatibility.
-FROM python:3.12-slim
+# Use official Python image
+FROM python:3.11-slim
 
-# Set environment variables to ensure output is sent straight to terminal (no buffering)
-# and to prevent Python from writing pyc files.
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONDONTWRITEBYTECODE=1
-
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Copy the requirements file into the container
+# Copy requirements
 COPY requirements.txt .
 
-# Install the dependencies
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application code
-COPY lang.py .
+# Copy app files
+COPY . .
 
-EXPOSE 8000
+# Expose the FastAPI port
+EXPOSE 4000
 
-# Define the command to run the application (Interactive CLI)
-CMD ["uvicorn", "lang:app", "--host", "0.0.0.0", "--port", "8000"]
+# Start FastAPI server
+CMD ["uvicorn", "lang:app", "--host", "0.0.0.0", "--port", "4000"]
