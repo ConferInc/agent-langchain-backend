@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 import os
 
 # Load env variables
@@ -17,6 +18,15 @@ llm = ChatOpenAI(
 )
 
 app = FastAPI()
+
+# Add CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],              # Allow frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],             # POST, GET, OPTIONS
+    allow_headers=["*"],             # Content-Type, Authorization
+)
 
 class ChatRequest(BaseModel):
     message: str
